@@ -23,18 +23,18 @@
 
 ```bash
 git clone https://github.com/Nauvvi1/graphql-node-app.git
-cd graphql-node-app
+cd graphql-node-app```
 
 ### 2. Установите зависимости
 
 ```bash
 npm init -y
-npm install express apollo-server-express graphql ejs sqlite3
+npm install express apollo-server-express graphql ejs sqlite3```
 
 ### 3. Запустите проект
 
 ```bash
-node app.js
+node app.js```
 
 ### 4. Перейдите на главную страницу и начните использование
 
