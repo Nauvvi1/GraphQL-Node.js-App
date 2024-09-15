@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GraphQL App</title>
+</head>
+<body>
+  <h1>GraphQL User Query</h1>
+  <p>Создайте запрос к данным / Create a data request format</p>
+  <br>
+  <form id="graphql-form">
+    <label for="query">GraphQL Query:</label><br>
+    <textarea id="query" rows="5" cols="50">
+query {
+  users {
+    id
+    name
+    email
+    age
+  }
+}
+    </textarea><br><br>
+    <button type="submit">Send Query</button>
+  </form>
+
+  <h2>Response:</h2>
+  <pre id="response"></pre>
+
+  <script>
+    const form = document.getElementById('graphql-form');
+    const responseField = document.getElementById('response');
+
+    form.onsubmit = async (e) => {
+      e.preventDefault();
+      
+      const query = document.getElementById('query').value;
+      const response = await fetch('/graphql', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ query }),
+      });
+
+      const result = await response.json();
+      responseField.textContent = JSON.stringify(result, null, 2);
+    };
+  </script>
+</body>
+</html>

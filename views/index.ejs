@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add New User</title>
+</head>
+<body>
+  <h1>Add a New User</h1>
+  <form id="user-form">
+    <label for="name">Name:</label><br>
+    <input type="text" id="name" required><br><br>
+
+    <label for="email">Email:</label><br>
+    <input type="email" id="email" required><br><br>
+
+    <label for="age">Age:</label><br>
+    <input type="number" id="age" required><br><br>
+
+    <button type="submit">Add User</button>
+  </form>
+
+  <h2>Response:</h2>
+  <pre id="response"></pre>
+
+  <script>
+    const form = document.getElementById('user-form');
+    const responseField = document.getElementById('response');
+
+    form.onsubmit = async (e) => {
+      e.preventDefault();
+      
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const age = document.getElementById('age').value;
+
+      const query = `
+        mutation {
+          createUser(name: "${name}", email: "${email}", age: ${age}) {
+            id
+            name
+            email
+            age
+          }
+        }
+      `;
+
+      const response = await fetch('/graphql', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ query }),
+      });
+
+      const result = await response.json();
+      responseField.textContent = JSON.stringify(result, null, 2);
+      window.location.href = '/users'
+    };
+  </script>
+</body>
+</html>
